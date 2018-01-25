@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudyoung.wx.dao.WXMessageMapper">
+  <resultMap id="BaseResultMap" type="com.cloudyoung.wx.model.WXMessage">
+    <id column="basemessage_id" jdbcType="INTEGER" property="basemessageId" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="tousername" jdbcType="VARCHAR" property="tousername" />
+    <result column="fromusername" jdbcType="VARCHAR" property="fromusername" />
+    <result column="msgtype" jdbcType="VARCHAR" property="msgtype" />
+    <result column="msgId" jdbcType="INTEGER" property="msgid" />
+    <result column="picurl" jdbcType="VARCHAR" property="picurl" />
+    <result column="mediaid" jdbcType="VARCHAR" property="mediaid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="location_x" jdbcType="VARCHAR" property="locationX" />
+    <result column="location_y" jdbcType="VARCHAR" property="locationY" />
+    <result column="scale" jdbcType="VARCHAR" property="scale" />
+    <result column="lable" jdbcType="VARCHAR" property="lable" />
+    <result column="musicurl" jdbcType="VARCHAR" property="musicurl" />
+    <result column="hqmusicurl" jdbcType="VARCHAR" property="hqmusicurl" />
+    <result column="thumbmediaId" jdbcType="VARCHAR" property="thumbmediaid" />
+    <result column="event" jdbcType="VARCHAR" property="event" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="video_id" jdbcType="INTEGER" property="videoId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cloudyoung.wx.model.WXMessage">
+    <result column="createtime" jdbcType="LONGVARCHAR" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    basemessage_id, userid, tousername, fromusername, msgtype, msgId, picurl, mediaid, 
+    title, description, url, location_x, location_y, scale, lable, musicurl, hqmusicurl, 
+    thumbmediaId, event, content, article_id, video_id
+  </sql>
+  <sql id="Blob_Column_List">
+    createtime
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.cloudyoung.wx.model.WXMessageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wx_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.cloudyoung.wx.model.WXMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wx_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wx_message
+    where basemessage_id = #{basemessageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx_message
+    where basemessage_id = #{basemessageId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloudyoung.wx.model.WXMessageExample">
+    delete from wx_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloudyoung.wx.model.WXMessage">
+    insert into wx_message (basemessage_id, userid, tousername, 
+      fromusername, msgtype, msgId, 
+      picurl, mediaid, title, 
+      description, url, location_x, 
+      location_y, scale, lable, 
+      musicurl, hqmusicurl, thumbmediaId, 
+      event, content, article_id, 
+      video_id, createtime)
+    values (#{basemessageId,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{tousername,jdbcType=VARCHAR}, 
+      #{fromusername,jdbcType=VARCHAR}, #{msgtype,jdbcType=VARCHAR}, #{msgid,jdbcType=INTEGER}, 
+      #{picurl,jdbcType=VARCHAR}, #{mediaid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{locationX,jdbcType=VARCHAR}, 
+      #{locationY,jdbcType=VARCHAR}, #{scale,jdbcType=VARCHAR}, #{lable,jdbcType=VARCHAR}, 
+      #{musicurl,jdbcType=VARCHAR}, #{hqmusicurl,jdbcType=VARCHAR}, #{thumbmediaid,jdbcType=VARCHAR}, 
+      #{event,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{articleId,jdbcType=INTEGER}, 
+      #{videoId,jdbcType=INTEGER}, #{createtime,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloudyoung.wx.model.WXMessage">
+    insert into wx_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="basemessageId != null">
+        basemessage_id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="tousername != null">
+        tousername,
+      </if>
+      <if test="fromusername != null">
+        fromusername,
+      </if>
+      <if test="msgtype != null">
+        msgtype,
+      </if>
+      <if test="msgid != null">
+        msgId,
+      </if>
+      <if test="picurl != null">
+        picurl,
+      </if>
+      <if test="mediaid != null">
+        mediaid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="locationX != null">
+        location_x,
+      </if>
+      <if test="locationY != null">
+        location_y,
+      </if>
+      <if test="scale != null">
+        scale,
+      </if>
+      <if test="lable != null">
+        lable,
+      </if>
+      <if test="musicurl != null">
+        musicurl,
+      </if>
+      <if test="hqmusicurl != null">
+        hqmusicurl,
+      </if>
+      <if test="thumbmediaid != null">
+        thumbmediaId,
+      </if>
+      <if test="event != null">
+        event,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="videoId != null">
+        video_id,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="basemessageId != null">
+        #{basemessageId,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="tousername != null">
+        #{tousername,jdbcType=VARCHAR},
+      </if>
+      <if test="fromusername != null">
+        #{fromusername,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null">
+        #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="msgid != null">
+        #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null">
+        #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="locationX != null">
+        #{locationX,jdbcType=VARCHAR},
+      </if>
+      <if test="locationY != null">
+        #{locationY,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=VARCHAR},
+      </if>
+      <if test="lable != null">
+        #{lable,jdbcType=VARCHAR},
+      </if>
+      <if test="musicurl != null">
+        #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="hqmusicurl != null">
+        #{hqmusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbmediaid != null">
+        #{thumbmediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null">
+        #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloudyoung.wx.model.WXMessageExample" resultType="java.lang.Long">
+    select count(*) from wx_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wx_message
+    <set>
+      <if test="record.basemessageId != null">
+        basemessage_id = #{record.basemessageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tousername != null">
+        tousername = #{record.tousername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromusername != null">
+        fromusername = #{record.fromusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgtype != null">
+        msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgid != null">
+        msgId = #{record.msgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.picurl != null">
+        picurl = #{record.picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaid != null">
+        mediaid = #{record.mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationX != null">
+        location_x = #{record.locationX,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationY != null">
+        location_y = #{record.locationY,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scale != null">
+        scale = #{record.scale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lable != null">
+        lable = #{record.lable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.musicurl != null">
+        musicurl = #{record.musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hqmusicurl != null">
+        hqmusicurl = #{record.hqmusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbmediaid != null">
+        thumbmediaId = #{record.thumbmediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.event != null">
+        event = #{record.event,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.videoId != null">
+        video_id = #{record.videoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update wx_message
+    set basemessage_id = #{record.basemessageId,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      tousername = #{record.tousername,jdbcType=VARCHAR},
+      fromusername = #{record.fromusername,jdbcType=VARCHAR},
+      msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      msgId = #{record.msgid,jdbcType=INTEGER},
+      picurl = #{record.picurl,jdbcType=VARCHAR},
+      mediaid = #{record.mediaid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      location_x = #{record.locationX,jdbcType=VARCHAR},
+      location_y = #{record.locationY,jdbcType=VARCHAR},
+      scale = #{record.scale,jdbcType=VARCHAR},
+      lable = #{record.lable,jdbcType=VARCHAR},
+      musicurl = #{record.musicurl,jdbcType=VARCHAR},
+      hqmusicurl = #{record.hqmusicurl,jdbcType=VARCHAR},
+      thumbmediaId = #{record.thumbmediaid,jdbcType=VARCHAR},
+      event = #{record.event,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      article_id = #{record.articleId,jdbcType=INTEGER},
+      video_id = #{record.videoId,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wx_message
+    set basemessage_id = #{record.basemessageId,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      tousername = #{record.tousername,jdbcType=VARCHAR},
+      fromusername = #{record.fromusername,jdbcType=VARCHAR},
+      msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      msgId = #{record.msgid,jdbcType=INTEGER},
+      picurl = #{record.picurl,jdbcType=VARCHAR},
+      mediaid = #{record.mediaid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      location_x = #{record.locationX,jdbcType=VARCHAR},
+      location_y = #{record.locationY,jdbcType=VARCHAR},
+      scale = #{record.scale,jdbcType=VARCHAR},
+      lable = #{record.lable,jdbcType=VARCHAR},
+      musicurl = #{record.musicurl,jdbcType=VARCHAR},
+      hqmusicurl = #{record.hqmusicurl,jdbcType=VARCHAR},
+      thumbmediaId = #{record.thumbmediaid,jdbcType=VARCHAR},
+      event = #{record.event,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      article_id = #{record.articleId,jdbcType=INTEGER},
+      video_id = #{record.videoId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudyoung.wx.model.WXMessage">
+    update wx_message
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="tousername != null">
+        tousername = #{tousername,jdbcType=VARCHAR},
+      </if>
+      <if test="fromusername != null">
+        fromusername = #{fromusername,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null">
+        msgtype = #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="msgid != null">
+        msgId = #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null">
+        mediaid = #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="locationX != null">
+        location_x = #{locationX,jdbcType=VARCHAR},
+      </if>
+      <if test="locationY != null">
+        location_y = #{locationY,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        scale = #{scale,jdbcType=VARCHAR},
+      </if>
+      <if test="lable != null">
+        lable = #{lable,jdbcType=VARCHAR},
+      </if>
+      <if test="musicurl != null">
+        musicurl = #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="hqmusicurl != null">
+        hqmusicurl = #{hqmusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbmediaid != null">
+        thumbmediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null">
+        event = #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        video_id = #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where basemessage_id = #{basemessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cloudyoung.wx.model.WXMessage">
+    update wx_message
+    set userid = #{userid,jdbcType=INTEGER},
+      tousername = #{tousername,jdbcType=VARCHAR},
+      fromusername = #{fromusername,jdbcType=VARCHAR},
+      msgtype = #{msgtype,jdbcType=VARCHAR},
+      msgId = #{msgid,jdbcType=INTEGER},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      mediaid = #{mediaid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      location_x = #{locationX,jdbcType=VARCHAR},
+      location_y = #{locationY,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=VARCHAR},
+      lable = #{lable,jdbcType=VARCHAR},
+      musicurl = #{musicurl,jdbcType=VARCHAR},
+      hqmusicurl = #{hqmusicurl,jdbcType=VARCHAR},
+      thumbmediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      event = #{event,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      article_id = #{articleId,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=LONGVARCHAR}
+    where basemessage_id = #{basemessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloudyoung.wx.model.WXMessage">
+    update wx_message
+    set userid = #{userid,jdbcType=INTEGER},
+      tousername = #{tousername,jdbcType=VARCHAR},
+      fromusername = #{fromusername,jdbcType=VARCHAR},
+      msgtype = #{msgtype,jdbcType=VARCHAR},
+      msgId = #{msgid,jdbcType=INTEGER},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      mediaid = #{mediaid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      location_x = #{locationX,jdbcType=VARCHAR},
+      location_y = #{locationY,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=VARCHAR},
+      lable = #{lable,jdbcType=VARCHAR},
+      musicurl = #{musicurl,jdbcType=VARCHAR},
+      hqmusicurl = #{hqmusicurl,jdbcType=VARCHAR},
+      thumbmediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      event = #{event,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      article_id = #{articleId,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER}
+    where basemessage_id = #{basemessageId,jdbcType=INTEGER}
+  </update>
+</mapper>
